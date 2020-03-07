@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { UserEntity } from './user/user.entity';
 import { PostModule } from './post/post.module';
 import { PostEntity } from './post/post.entity';
+import { CommentModule } from './comment/comment.module';
+import { CommentEntity } from './comment/comment.entity';
 
 dotenv.config()
 
@@ -18,11 +20,16 @@ dotenv.config()
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DB,
-      entities: [UserEntity, PostEntity],
+      entities: [
+        UserEntity,
+        PostEntity,
+        CommentEntity
+      ],
       synchronize: process.env.ENV === 'DEV',
     }),
     UserModule,
-    PostModule
+    PostModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
