@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typeorm'
+import { PostEntity } from 'src/post/post.entity'
+import { GenericEntity } from 'src/generic/generic.entity'
 
 enum Roles {
     user = 'user',
@@ -6,7 +8,7 @@ enum Roles {
 }
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class UserEntity extends GenericEntity {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -31,4 +33,7 @@ export class UserEntity {
 
     @Column({ type: 'enum', enum: Roles, default: Roles.user })
     role: Roles
+
+    @OneToMany(() => PostEntity, (post: PostEntity) => post.user)
+    posts: PostEntity[]
 }
