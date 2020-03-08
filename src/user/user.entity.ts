@@ -3,6 +3,7 @@ import { PostEntity } from 'src/post/post.entity'
 import { GenericEntity } from 'src/generic/generic.entity'
 import { CommentEntity } from 'src/comment/comment.entity'
 import { LikeEntity } from 'src/like/like.entity'
+import { UserFollowerEntity } from 'src/user-follower/user-follower.entity'
 
 enum Roles {
     user = 'user',
@@ -44,4 +45,10 @@ export class UserEntity extends GenericEntity {
 
     @OneToMany(() => LikeEntity, (like: LikeEntity) => like.user, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     likes: LikeEntity[]
+
+    @OneToMany(() => UserFollowerEntity, (userFollower: UserFollowerEntity) => userFollower.followers)
+    followers: UserFollowerEntity[]
+
+    @OneToMany(() => UserFollowerEntity, (userFollowing: UserFollowerEntity) => userFollowing.following)
+    following: UserFollowerEntity[]
 }
