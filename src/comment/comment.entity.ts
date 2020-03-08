@@ -17,5 +17,6 @@ export class CommentEntity extends GenericEntity {
     user: UserEntity
 
     @ManyToOne(() => PostEntity, (post: PostEntity) => post.comments, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'post_id' })
     post: PostEntity
 }

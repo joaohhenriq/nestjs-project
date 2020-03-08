@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typ
 import { PostEntity } from 'src/post/post.entity'
 import { GenericEntity } from 'src/generic/generic.entity'
 import { CommentEntity } from 'src/comment/comment.entity'
+import { LikeEntity } from 'src/like/like.entity'
 
 enum Roles {
     user = 'user',
@@ -38,6 +39,9 @@ export class UserEntity extends GenericEntity {
     @OneToMany(() => PostEntity, (post: PostEntity) => post.user)
     posts: PostEntity[]
 
-    @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.post, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+    @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.user, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     comments: CommentEntity[]
+
+    @OneToMany(() => LikeEntity, (like: LikeEntity) => like.user, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+    likes: LikeEntity[]
 }

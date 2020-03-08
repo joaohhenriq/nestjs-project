@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMan
 import { UserEntity } from 'src/user/user.entity'
 import { GenericEntity } from 'src/generic/generic.entity'
 import { CommentEntity } from 'src/comment/comment.entity'
+import { LikeEntity } from 'src/like/like.entity'
 
 @Entity({ name: 'posts' })
 export class PostEntity extends GenericEntity {
@@ -21,4 +22,7 @@ export class PostEntity extends GenericEntity {
 
     @OneToMany(() => CommentEntity, (comment: CommentEntity) => comment.post, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     comments: CommentEntity[]
+
+    @OneToMany(() => LikeEntity, (like: LikeEntity) => like.post, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+    likes: LikeEntity[]
 }

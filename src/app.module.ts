@@ -9,6 +9,8 @@ import { PostModule } from './post/post.module';
 import { PostEntity } from './post/post.entity';
 import { CommentModule } from './comment/comment.module';
 import { CommentEntity } from './comment/comment.entity';
+import { LikeModule } from './like/like.module';
+import { LikeEntity } from './like/like.entity';
 
 dotenv.config()
 
@@ -23,13 +25,15 @@ dotenv.config()
       entities: [
         UserEntity,
         PostEntity,
-        CommentEntity
+        CommentEntity,
+        LikeEntity,
       ],
       synchronize: process.env.ENV === 'DEV',
     }),
     UserModule,
     PostModule,
     CommentModule,
+    LikeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
