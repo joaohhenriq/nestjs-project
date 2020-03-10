@@ -5,7 +5,7 @@ import { CommentEntity } from 'src/comment/comment.entity'
 import { LikeEntity } from 'src/like/like.entity'
 import { UserFollowerEntity } from 'src/user-follower/user-follower.entity'
 
-enum Roles {
+export enum Roles {
     user = 'user',
     admin = 'admin',
 }
