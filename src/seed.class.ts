@@ -2,23 +2,29 @@ import { EntityManager } from "typeorm";
 import { UserEntity, Roles } from "./user/user.entity";
 import { internet, name, random, lorem } from 'faker'
 import * as dotenv from 'dotenv'
+import { PostEntity } from "./post/post.entity";
+import { Post } from "@nestjs/common";
 
 dotenv.config()
 
 export class Seed {
-    constructor(private readonly entityManager: EntityManager) { }
+    private users: Array<Partial<UserEntity>>
 
-    fakeIt<T>(entity: any): void {
+    constructor(private readonly entityManager: EntityManager) {
+        this.users = []
+    }
+
+    async fakeIt<T>(entity: any): Promise<void> {
         switch (entity) {
             case UserEntity:
-                this.addData(this.userDate(), entity)
+                return this.addData(this.userData(), entity, (data: Array<Partial<UserEntity>>) => this.users = data)
                 break;
-            default:
-                break;
+            case PostEntity:
+                return this.addData(this.postData(), entity)
         }
     }
 
-    private userDate(): Array<Partial<UserEntity>> {
+    private userData(): Array<Partial<UserEntity>> {
         return Array.from({ length: +process.env.SEED_NUM || 100 })
             .map<Partial<UserEntity>>(() => {
                 return {
@@ -30,9 +36,24 @@ export class Seed {
             })
     }
 
-    private addData<T>(data: Array<Partial<T>>, entity: any): void {
-        this.entityManager.save<T, T>(entity, data as any)
-            .then((savedData: Array<Partial<T>>) => console.log(savedData))
+    private postData(): Array<Partial<PostEntity>> {
+        return Array.from({ length: +process.env.SEED_NUM || 100 })
+            .map<Partial<PostEntity>>(() => {
+                return {
+                    body: lorem.paragraphs(),
+                    title: lorem.words(),
+                    user: random.arrayElement(this.users)
+                }
+            })
+    }
+
+    private async addData<T>(data: Array<Partial<T>>, entity: any, callback?: (savedData: Array<Partial<T>>) => void): Promise<void> {
+        return this.entityManager.save<T, T>(entity, data as any)
+            .then((savedData: Array<Partial<T>>) => {
+                if (callback) {
+                    callback(savedData)
+                }
+            })
             .catch(console.error)
     }
 }
