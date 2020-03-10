@@ -3,6 +3,7 @@ import { EntityManager } from 'typeorm';
 import { UserEntity, Roles } from './user/user.entity';
 import { Seed } from './seed.class';
 import { PostEntity } from './post/post.entity';
+import { CommentEntity } from './comment/comment.entity';
 
 @Injectable()
 export class AppService extends Seed {
@@ -18,6 +19,7 @@ export class AppService extends Seed {
 
   private async fakeData(): Promise<void> {
     await this.fakeIt(UserEntity)
-    this.fakeIt(PostEntity)
+    await this.fakeIt(PostEntity)
+    await this.fakeIt(CommentEntity)
   }
 }

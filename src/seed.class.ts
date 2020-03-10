@@ -3,15 +3,17 @@ import { UserEntity, Roles } from "./user/user.entity";
 import { internet, name, random, lorem } from 'faker'
 import * as dotenv from 'dotenv'
 import { PostEntity } from "./post/post.entity";
-import { Post } from "@nestjs/common";
+import { CommentEntity } from "./comment/comment.entity";
 
 dotenv.config()
 
 export class Seed {
     private users: Array<Partial<UserEntity>>
+    private posts: Array<Partial<PostEntity>>
 
     constructor(private readonly entityManager: EntityManager) {
-        this.users = []
+        this.users = [],
+            this.posts = []
     }
 
     async fakeIt<T>(entity: any): Promise<void> {
@@ -20,7 +22,9 @@ export class Seed {
                 return this.addData(this.userData(), entity, (data: Array<Partial<UserEntity>>) => this.users = data)
                 break;
             case PostEntity:
-                return this.addData(this.postData(), entity)
+                return this.addData(this.postData(), entity, (data: Array<Partial<PostEntity>>) => this.posts = data)
+            case CommentEntity:
+                return this.addData(this.commentData(), entity)
         }
     }
 
@@ -42,6 +46,17 @@ export class Seed {
                 return {
                     body: lorem.paragraphs(),
                     title: lorem.words(),
+                    user: random.arrayElement(this.users)
+                }
+            })
+    }
+
+    private commentData(): Array<Partial<CommentEntity>> {
+        return Array.from({ length: +process.env.SEED_NUM || 100 })
+            .map<Partial<CommentEntity>>(() => {
+                return {
+                    body: lorem.sentences(),
+                    post: random.arrayElement(this.posts),
                     user: random.arrayElement(this.users)
                 }
             })
