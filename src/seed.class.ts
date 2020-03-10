@@ -4,12 +4,14 @@ import { internet, name, random, lorem } from 'faker'
 import * as dotenv from 'dotenv'
 import { PostEntity } from "./post/post.entity";
 import { CommentEntity } from "./comment/comment.entity";
+import { LikeEntity, Type } from "./like/like.entity";
 
 dotenv.config()
 
 export class Seed {
     private users: Array<Partial<UserEntity>>
     private posts: Array<Partial<PostEntity>>
+    private likes: Array<Partial<LikeEntity>>
 
     constructor(private readonly entityManager: EntityManager) {
         this.users = [],
@@ -25,6 +27,8 @@ export class Seed {
                 return this.addData(this.postData(), entity, (data: Array<Partial<PostEntity>>) => this.posts = data)
             case CommentEntity:
                 return this.addData(this.commentData(), entity)
+            case LikeEntity:
+                return this.addData(this.likeData(), entity)
         }
     }
 
@@ -56,6 +60,17 @@ export class Seed {
             .map<Partial<CommentEntity>>(() => {
                 return {
                     body: lorem.sentences(),
+                    post: random.arrayElement(this.posts),
+                    user: random.arrayElement(this.users)
+                }
+            })
+    }
+
+    private likeData(): Array<Partial<LikeEntity>> {
+        return Array.from({ length: +process.env.SEED_NUM || 100 })
+            .map<Partial<LikeEntity>>(() => {
+                return {
+                    type: random.arrayElement(Object.keys(Type)),
                     post: random.arrayElement(this.posts),
                     user: random.arrayElement(this.users)
                 }

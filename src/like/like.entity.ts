@@ -3,7 +3,7 @@ import { UserEntity } from 'src/user/user.entity'
 import { GenericEntity } from 'src/generic/generic.entity'
 import { PostEntity } from 'src/post/post.entity'
 
-enum Type {
+export enum Type {
     happy = 'happy',
     sad = 'sad',
     angry = 'angry',
