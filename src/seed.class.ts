@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv'
 import { PostEntity } from "./post/post.entity";
 import { CommentEntity } from "./comment/comment.entity";
 import { LikeEntity, Type } from "./like/like.entity";
+import { UserFollowerEntity, Status } from "./user-follower/user-follower.entity";
 
 dotenv.config()
 
@@ -29,6 +30,8 @@ export class Seed {
                 return this.addData(this.commentData(), entity)
             case LikeEntity:
                 return this.addData(this.likeData(), entity)
+            case UserFollowerEntity:
+                return this.addData(this.followData(), entity)
         }
     }
 
@@ -73,6 +76,20 @@ export class Seed {
                     type: random.arrayElement(Object.keys(Type)),
                     post: random.arrayElement(this.posts),
                     user: random.arrayElement(this.users)
+                }
+            })
+    }
+
+    private followData(): Array<Partial<UserFollowerEntity>> {
+        return Array.from({ length: +process.env.SEED_NUM || 100 })
+            .map<Partial<UserFollowerEntity>>(() => {
+                const followers = random.arrayElement(this.users)
+                const following = random.arrayElement(this.users.filter(({ id }: Partial<UserEntity>) => id !== followers.id))
+
+                return {
+                    followers,
+                    following,
+                    status: random.arrayElement(Object.keys(Status)),
                 }
             })
     }

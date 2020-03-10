@@ -5,6 +5,7 @@ import { Seed } from './seed.class';
 import { PostEntity } from './post/post.entity';
 import { CommentEntity } from './comment/comment.entity';
 import { LikeEntity } from './like/like.entity';
+import { UserFollowerEntity } from './user-follower/user-follower.entity';
 
 @Injectable()
 export class AppService extends Seed {
@@ -21,7 +22,8 @@ export class AppService extends Seed {
   private async fakeData(): Promise<void> {
     await this.fakeIt(UserEntity)
     await this.fakeIt(PostEntity)
-    await this.fakeIt(CommentEntity)
-    await this.fakeIt(LikeEntity)
+    this.fakeIt(CommentEntity)
+    this.fakeIt(LikeEntity)
+    this.fakeIt(UserFollowerEntity)
   }
 }

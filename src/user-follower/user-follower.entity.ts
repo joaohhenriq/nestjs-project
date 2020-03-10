@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { UserEntity } from 'src/user/user.entity'
 import { GenericEntity } from 'src/generic/generic.entity'
 
-enum Status {
+export enum Status {
     blocked = 'blocked',
     accepted = 'accepted',
     pending = 'pending'
