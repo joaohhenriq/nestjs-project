@@ -6,6 +6,21 @@ import { PostService } from './post.service';
 @Crud({
     model: {
         type: PostEntity
+    },
+    query: {
+        alwaysPaginate: true,
+        limit: 10,
+        join: {
+            comments: {
+                eager: false
+            },
+            likes: {
+                eager: false
+            },
+            'comments.user': {
+                eager: false
+            }
+        }
     }
 })
 @Controller('post')

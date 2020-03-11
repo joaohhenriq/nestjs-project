@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserFollowerService extends TypeOrmCrudService<UserFollowerEntity> {
-    constructor(@InjectRepository(UserFollowerEntity) private readonly likeRepo: Repository<UserFollowerEntity>) {
-        super(likeRepo)
+    constructor(@InjectRepository(UserFollowerEntity) private readonly userFollowerRepo: Repository<UserFollowerEntity>) {
+        super(userFollowerRepo)
     }
 }
