@@ -1,18 +1,17 @@
 import { EntityManager } from "typeorm";
 import { UserEntity, Roles } from "./user/user.entity";
 import { internet, name, random, lorem } from 'faker'
-import * as dotenv from 'dotenv'
 import { PostEntity } from "./post/post.entity";
 import { CommentEntity } from "./comment/comment.entity";
 import { LikeEntity, Type } from "./like/like.entity";
 import { UserFollowerEntity, Status } from "./user-follower/user-follower.entity";
+import * as dotenv from 'dotenv'
 
 dotenv.config()
 
 export class Seed {
     private users: Array<Partial<UserEntity>>
     private posts: Array<Partial<PostEntity>>
-    private likes: Array<Partial<LikeEntity>>
 
     constructor(private readonly entityManager: EntityManager) {
         this.users = [],

@@ -6,13 +6,19 @@ import { PostEntity } from './post/post.entity';
 import { CommentEntity } from './comment/comment.entity';
 import { LikeEntity } from './like/like.entity';
 import { UserFollowerEntity } from './user-follower/user-follower.entity';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Injectable()
 export class AppService extends Seed {
 
   constructor(entityManager: EntityManager) {
     super(entityManager)
-    this.fakeData()
+    if (process.env.SEED) {
+      this.fakeData()
+    }
+
   }
 
   getHello(): string {
