@@ -6,6 +6,26 @@ import { Crud } from '@nestjsx/crud'
 @Crud({
     model: {
         type: UserEntity
+    },
+    query: {
+        limit: 10,
+        alwaysPaginate: true,
+        join: {
+            followers: {
+                eager: true
+            },
+            following: {
+                eager: true
+            },
+            'followers.following': {
+                eager: true,
+                alias: 'user_followers'
+            },
+            'following.followers': {
+                eager: true,
+                alias: 'user_following'
+            }
+        }
     }
 })
 @Controller('user')

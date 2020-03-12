@@ -14,6 +14,12 @@ export class UserFollowerEntity extends GenericEntity {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column({ type: 'number' })
+    followers_id: number
+
+    @Column({ type: 'number' })
+    following_id: number
+
     @ManyToOne(() => UserEntity, (user: UserEntity) => user.followers, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     @JoinColumn({ name: 'followers_id' })
     followers: UserEntity
