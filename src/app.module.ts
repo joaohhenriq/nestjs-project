@@ -13,6 +13,7 @@ import { LikeModule } from './like/like.module';
 import { LikeEntity } from './like/like.entity';
 import { UserFollowerModule } from './user-follower/user-follower.module';
 import { UserFollowerEntity } from './user-follower/user-follower.entity';
+import { CommentSubscriber } from './comment/comment.subscriber';
 
 dotenv.config()
 
@@ -24,6 +25,9 @@ dotenv.config()
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DB,
+      subscribers: [
+        CommentSubscriber
+      ],
       entities: [
         UserEntity,
         PostEntity,

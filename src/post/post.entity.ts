@@ -25,4 +25,7 @@ export class PostEntity extends GenericEntity {
 
     @OneToMany(() => LikeEntity, (like: LikeEntity) => like.post, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     likes: LikeEntity[]
+
+    @Column({ default: 0, type: 'int' })
+    comments_num: number
 }
