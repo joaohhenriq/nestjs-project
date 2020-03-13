@@ -28,4 +28,7 @@ export class PostEntity extends GenericEntity {
 
     @Column({ default: 0, type: 'int' })
     comments_num: number
+
+    @Column({ type: 'number' })
+    user_id: number
 }
