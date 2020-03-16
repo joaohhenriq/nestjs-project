@@ -15,18 +15,23 @@ export class FileEntity extends GenericEntity {
 
     @Column({ length: 50 })
     @IsString({ always: true })
-    @IsEmpty({ always: true, message: 'hey.. I know' })
+    @IsEmpty({ always: true, message: 'hey.. it is empty' })
     original_name: string
 
     @Column({ length: 50 })
     @IsString({ always: true })
-    @IsEmpty({ always: true, message: 'hey.. I know' })
+    @IsEmpty({ always: true, message: 'hey.. it is empty' })
     current_name: string
 
     @Column('int')
     @IsNumber()
-    @IsEmpty({ always: true, message: 'hey.. I know' })
+    @IsEmpty({ always: true, message: 'hey.. it is empty' })
     size: number
+
+    @Column({ length: 50 })
+    @IsString({ always: true })
+    @IsEmpty({ always: true, message: 'hey.. it is empty' })
+    extension: string
 
     @ManyToOne(() => UserEntity, (user: UserEntity) => user.files, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })
@@ -36,9 +41,9 @@ export class FileEntity extends GenericEntity {
     @JoinColumn({ name: 'post_id' })
     post: PostEntity
 
-    @Column({ type: 'number' })
+    @Column({ type: 'number', select: false })
     user_id: number
 
-    @Column({ type: 'number' })
+    @Column({ type: 'number', select: false })
     post_id: number
 }
