@@ -14,6 +14,8 @@ import { LikeEntity } from './like/like.entity';
 import { UserFollowerModule } from './user-follower/user-follower.module';
 import { UserFollowerEntity } from './user-follower/user-follower.entity';
 import { CommentSubscriber } from './comment/comment.subscriber';
+import { FileModule } from './file/file.module';
+import { FileEntity } from './file/file.entity';
 
 dotenv.config()
 
@@ -33,7 +35,8 @@ dotenv.config()
         PostEntity,
         CommentEntity,
         LikeEntity,
-        UserFollowerEntity
+        UserFollowerEntity,
+        FileEntity,
       ],
       synchronize: process.env.ENV === 'DEV',
     }),
@@ -42,6 +45,7 @@ dotenv.config()
     CommentModule,
     LikeModule,
     UserFollowerModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

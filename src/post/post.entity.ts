@@ -8,6 +8,7 @@ import { CrudValidationGroups } from '@nestjsx/crud'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { IsUniqueTitle } from './validators/unique.validator'
+import { FileEntity } from 'src/file/file.entity'
 
 const { CREATE, UPDATE } = CrudValidationGroups
 
@@ -55,6 +56,9 @@ export class PostEntity extends GenericEntity {
 
     @Column({ type: 'number' })
     user_id: number
+
+    @OneToMany(() => FileEntity, (file: FileEntity) => file.post)
+    files: FileEntity[]
 }
 
 export default new Promise<Repository<PostEntity>>((resolve: (postRepo: Repository<PostEntity>) => void) => {

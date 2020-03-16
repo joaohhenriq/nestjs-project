@@ -4,6 +4,7 @@ import { GenericEntity } from 'src/generic/generic.entity'
 import { CommentEntity } from 'src/comment/comment.entity'
 import { LikeEntity } from 'src/like/like.entity'
 import { UserFollowerEntity } from 'src/user-follower/user-follower.entity'
+import { FileEntity } from 'src/file/file.entity'
 
 export enum Roles {
     user = 'user',
@@ -51,4 +52,7 @@ export class UserEntity extends GenericEntity {
 
     @OneToMany(() => UserFollowerEntity, (userFollowing: UserFollowerEntity) => userFollowing.following)
     following: UserFollowerEntity[]
+
+    @OneToMany(() => FileEntity, (file: FileEntity) => file.user)
+    files: FileEntity[]
 }
